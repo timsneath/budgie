@@ -34,12 +34,11 @@ namespace BudgieClient
                 Microsoft.ApplicationInsights.WindowsCollectors.Metadata |
                 Microsoft.ApplicationInsights.WindowsCollectors.Session);
             this.InitializeComponent();
-            this.Suspending += OnSuspending;    
-
-            using (var db = new BudgetContext())
-            {
-                db.Database.Migrate();
-            }
+            this.Suspending += OnSuspending;
+            //using (var db = new BudgetContext())
+            //{
+            //    db.Database.Migrate();
+            //}
         }
 
         /// <summary>

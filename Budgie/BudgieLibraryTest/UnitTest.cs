@@ -2,13 +2,14 @@
 using Microsoft.Data.Entity;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using BudgieLibrary;
+using System.Threading.Tasks;
 
 namespace BudgieLibraryTest
 {
     [TestClass]
     public class BudgetTests
     {
-        [ClassInitialize]
+        //[ClassInitialize]
         public void CreateSampleBudget()
         {
             using (var budget = new BudgetContext())
@@ -53,28 +54,30 @@ namespace BudgieLibraryTest
                     new Payee("New York Times"),
                     new Payee("Microsoft Corporation")
                     });
+
+                budget.SaveChanges();
             }
         }
 
         [TestMethod]
         public void CategoriesCreatedSuccessfully()
         {
+            this.CreateSampleBudget();
+
             using (var budget = new BudgetContext())
             {
-                Assert.Equals(budget.Categories.CountAsync(), 7);
+                Assert.AreEqual(budget.Accounts.ToString(), "Budget");
             }
+
+            this.DeleteSampleBudget();
         }
 
         [TestMethod]
         public void PayeesCreatedSuccessfully()
         {
-            using (var budget = new BudgetContext())
-            {
-                Assert.Equals(budget.Payees.CountAsync(), 11);
-            }
         }
 
-        [ClassCleanup]
+        //[ClassCleanup]
         public void DeleteSampleBudget()
         {
             using (var budget = new BudgetContext())
